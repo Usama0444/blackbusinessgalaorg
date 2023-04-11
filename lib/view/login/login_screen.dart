@@ -25,9 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final userTextController = TextEditingController();
   final passwordTextController = TextEditingController();
 
-  String _username = '';
-  String _password = '';
-
   showMessage(String message, Color color, IconData iconData) {
     Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.black, textColor: Colors.white, fontSize: 16.0);
   }
@@ -73,11 +70,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   checkValidation() {
-    if (_username == null || _username.isEmpty || _username == "") {
+    if (userTextController.text == null || userTextController.text.isEmpty || userTextController.text == "") {
       showMessage("Please enter username", Colors.red, Icons.close);
       return false;
     } else {
-      if (_password == null || _password.isEmpty || _password == "") {
+      if (passwordTextController.text == null || passwordTextController.text.isEmpty || passwordTextController.text == "") {
         showMessage("Please enter password", Colors.red, Icons.close);
         return false;
       } else {
@@ -129,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         leftIcon: Icons.account_circle,
                         textController: userTextController,
                         obscureText: false,
-                        onChanged: (text) => _username = text,
+                        onChanged: (text) => userTextController.text = text,
                       ),
                       SizedBox(
                         height: 15,
@@ -139,18 +136,32 @@ class _LoginScreenState extends State<LoginScreen> {
                         leftIcon: Icons.lock,
                         textController: passwordTextController,
                         obscureText: true,
-                        onChanged: (text) => _password = text,
+                        onChanged: (text) => passwordTextController.text = text,
                         onTap: () {},
                       ),
                       SizedBox(height: 45),
-                      MyRaisedButton(
-                        title: "Sign in",
-                        isBackground: true,
-                        onPressed: () {
-                          if (checkValidation()) {
-                            signIn(_username, _password);
-                          }
-                        },
+                      Container(
+                        width: width * 0.85,
+                        height: height <= 667.0 ? height * 0.07 : height * 0.06,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                              side: BorderSide(color: Colors.black, width: 0),
+                            ),
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () {
+                            print('press');
+                            if (checkValidation()) {
+                              signIn(userTextController.text, passwordTextController.text);
+                            }
+                          },
+                          child: Text(
+                            'sign in'.toUpperCase(),
+                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: height <= 667.0 ? 16 : 18, fontWeight: FontWeight.bold)),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: height * 0.04,
