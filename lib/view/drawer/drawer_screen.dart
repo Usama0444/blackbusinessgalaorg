@@ -9,7 +9,8 @@ import 'package:bbp/view/login/login_screen.dart';
 import 'package:bbp/view/signup/signup_screen.dart';
 import 'package:bbp/view/video/video_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -34,7 +35,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
   }
 
   showMessage(String message, Color color, IconData iconData) {
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.black, textColor: Colors.white, fontSize: 16.0);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   getProfile() async {
@@ -44,9 +52,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
         _isLoggedIn = true;
       });
     }
-    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
+    Map<String, String> requestHeaders = {
+      'era-token': prefs.getString("token") ?? ''
+    };
     var jsonData = null;
-    var reponse = await http.get(Uri.parse("${Constants.BASE_URL}/user/profile/profile"), headers: requestHeaders);
+    var reponse = await http.get(
+        Uri.parse("${Constants.BASE_URL}/user/profile/profile"),
+        headers: requestHeaders);
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       var data = jsonData["data"];
@@ -68,7 +80,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
   logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("token");
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => SignupScreen()), (route) => false);
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (BuildContext context) => SignupScreen()),
+        (route) => false);
   }
 
   @override
@@ -85,7 +99,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
           Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(imgUrl == null ? "https://cdn0.iconfinder.com/data/icons/social-media-network-4/48/male_avatar-512.png" : imgUrl),
+                backgroundImage: NetworkImage(imgUrl == null
+                    ? "https://cdn0.iconfinder.com/data/icons/social-media-network-4/48/male_avatar-512.png"
+                    : imgUrl),
                 backgroundColor: Colors.transparent,
               ),
               SizedBox(
@@ -93,7 +109,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
               Text(
                 name,
-                style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontWeight: FontWeight.w500, fontSize: 20)),
+                style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: .5,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20)),
               ),
             ],
           ),
@@ -104,9 +125,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   _isLoggedIn
                       ? Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AddBusinessScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => AddBusinessScreen()),
                         )
-                      : showMessage("please login to access this feature", Colors.red, Icons.receipt);
+                      : showMessage("please login to access this feature",
+                          Colors.red, Icons.receipt);
                 },
                 child: MenuWidget(title: "Add Business", icon: AntDesign.plus),
               ),
@@ -118,9 +141,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   _isLoggedIn
                       ? Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FavoritesScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => FavoritesScreen()),
                         )
-                      : showMessage("please login to access this feature", Colors.red, Icons.receipt);
+                      : showMessage("please login to access this feature",
+                          Colors.red, Icons.receipt);
                 },
                 child: MenuWidget(title: "Favorites", icon: AntDesign.star),
               ),
@@ -134,16 +159,19 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     MaterialPageRoute(builder: (context) => VideoScreen()),
                   );
                 },
-                child: MenuWidget(title: "Watch Video", icon: AntDesign.videocamera),
+                child: MenuWidget(
+                    title: "Watch Video", icon: AntDesign.videocamera),
               ),
               SizedBox(
                 height: 20,
               ),
               InkWell(
                 onTap: () {
-                  launch("https://instagram.com/blackbusinesspensacola?igshid=1rphwmqss6f5m");
+                  launch(
+                      "https://instagram.com/blackbusinesspensacola?igshid=1rphwmqss6f5m");
                 },
-                child: MenuWidget(title: "Instagram", icon: AntDesign.instagram),
+                child:
+                    MenuWidget(title: "Instagram", icon: AntDesign.instagram),
               ),
               SizedBox(
                 height: 20,
@@ -152,7 +180,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 onTap: () {
                   launch("https://www.facebook.com/blackbusinesspensacola/");
                 },
-                child: MenuWidget(title: "Facebook", icon: AntDesign.facebook_square),
+                child: MenuWidget(
+                    title: "Facebook", icon: AntDesign.facebook_square),
               )
             ],
           ),
@@ -163,7 +192,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EditProfileScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => EditProfileScreen()),
                         );
                       },
                       child: Row(
@@ -177,7 +207,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           ),
                           Text(
                             "Edit Profile",
-                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontWeight: FontWeight.w500, fontSize: 16)),
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    color: Colors.white,
+                                    letterSpacing: .5,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16)),
                           ),
                         ],
                       ),
@@ -200,7 +235,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           ),
                           Text(
                             "Log Out",
-                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontWeight: FontWeight.w500, fontSize: 16)),
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    color: Colors.white,
+                                    letterSpacing: .5,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16)),
                           ),
                         ],
                       ),
@@ -213,7 +253,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
                         );
                       },
                       child: Row(
@@ -227,7 +268,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           ),
                           Text(
                             "Login",
-                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontWeight: FontWeight.w500, fontSize: 16)),
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    color: Colors.white,
+                                    letterSpacing: .5,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16)),
                           ),
                         ],
                       ),
@@ -239,7 +285,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SignupScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => SignupScreen()),
                         );
                       },
                       child: Row(
@@ -253,7 +300,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           ),
                           Text(
                             "Signup",
-                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontWeight: FontWeight.w500, fontSize: 16)),
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    color: Colors.white,
+                                    letterSpacing: .5,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16)),
                           ),
                         ],
                       ),
@@ -270,7 +322,8 @@ class MenuWidget extends StatelessWidget {
   final String title;
   final IconData icon;
 
-  const MenuWidget({Key? key, required this.title, required this.icon}) : super(key: key);
+  const MenuWidget({Key? key, required this.title, required this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +340,12 @@ class MenuWidget extends StatelessWidget {
         ),
         Text(
           title,
-          style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontWeight: FontWeight.w500, fontSize: 18)),
+          style: GoogleFonts.poppins(
+              textStyle: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: .5,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18)),
         )
       ],
     );

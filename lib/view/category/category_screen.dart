@@ -3,7 +3,6 @@ import 'package:bbp/utils/app_colors.dart';
 import 'package:bbp/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +26,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
   String businessRating = "0";
 
   showMessage(String message, Color color, IconData iconData) {
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.black, textColor: Colors.white, fontSize: 16.0);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   getBusiness(String catId) async {
@@ -40,12 +46,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
     setState(() {
       _isLoading = true;
     });
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     print(position.latitude.toString());
-    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
-    Map<String, String> data = {"cat": catId, "lat": position.latitude.toString(), "lng": position.longitude.toString(), "name": ""};
+    Map<String, String> requestHeaders = {
+      'era-token': prefs.getString("token") ?? ''
+    };
+    Map<String, String> data = {
+      "cat": catId,
+      "lat": position.latitude.toString(),
+      "lng": position.longitude.toString(),
+      "name": ""
+    };
     var jsonData = null;
-    var reponse = await http.post(Uri.parse("${Constants.BASE_URL}/business/getBusiness/business"), body: json.encode(data), headers: requestHeaders);
+    var reponse = await http.post(
+        Uri.parse("${Constants.BASE_URL}/business/getBusiness/business"),
+        body: json.encode(data),
+        headers: requestHeaders);
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       var data = jsonData["data"];
@@ -68,10 +85,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
   //Rate Business
   rateBusiness(String businessId, String rating) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
+    Map<String, String> requestHeaders = {
+      'era-token': prefs.getString("token") ?? ''
+    };
     Map<String, String> data = {"busi": businessId, "rating": rating};
     var jsonData = null;
-    var reponse = await http.post(Uri.parse("${Constants.BASE_URL}/business/giveRating/give_rating"), body: json.encode(data), headers: requestHeaders);
+    var reponse = await http.post(
+        Uri.parse("${Constants.BASE_URL}/business/giveRating/give_rating"),
+        body: json.encode(data),
+        headers: requestHeaders);
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       var data = jsonData["data"];
@@ -106,7 +128,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
           return new Container(
               height: height * 0.7,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0)),
                 color: Colors.grey[100],
               ),
               // width: double.infinity,
@@ -119,8 +143,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       width: width,
                       height: height * 0.25,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-                        child: Image.network(business["business_img"], width: width, height: height * 0.25, fit: BoxFit.fill),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30.0),
+                            topRight: Radius.circular(30.0)),
+                        child: Image.network(business["business_img"],
+                            width: width,
+                            height: height * 0.25,
+                            fit: BoxFit.fill),
                       ),
                     ),
                     Container(
@@ -133,10 +162,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             Text(business["business_name"],
                                 softWrap: false,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 24, fontWeight: FontWeight.bold))),
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold))),
                             Row(
                               children: [
-                                Text(business["cat_name"], style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 16, fontWeight: FontWeight.w400))),
+                                Text(business["cat_name"],
+                                    style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                            color: Colors.black,
+                                            letterSpacing: .5,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400))),
                                 SizedBox(
                                   width: 5,
                                 ),
@@ -148,7 +188,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Text(businessRating, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 16, fontWeight: FontWeight.w400))),
+                                Text(businessRating,
+                                    style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                            color: Colors.black,
+                                            letterSpacing: .5,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400))),
                                 SizedBox(
                                   width: 5,
                                 ),
@@ -173,7 +219,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         height: width * 0.12,
                                         child: FloatingActionButton(
                                           backgroundColor: Colors.white,
-                                          child: Image.asset("assets/images/phone.png", width: width * 0.07, height: width * 0.07, fit: BoxFit.contain),
+                                          child: Image.asset(
+                                              "assets/images/phone.png",
+                                              width: width * 0.07,
+                                              height: width * 0.07,
+                                              fit: BoxFit.contain),
                                           onPressed: () {
                                             launch("tel:${business["phone"]}");
                                           },
@@ -189,9 +239,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         height: width * 0.12,
                                         child: FloatingActionButton(
                                           backgroundColor: Colors.white,
-                                          child: Image.asset("assets/images/gmail.png", width: width * 0.07, height: width * 0.07, fit: BoxFit.contain),
+                                          child: Image.asset(
+                                              "assets/images/gmail.png",
+                                              width: width * 0.07,
+                                              height: width * 0.07,
+                                              fit: BoxFit.contain),
                                           onPressed: () {
-                                            launch("mailto:${business["email"]}");
+                                            launch(
+                                                "mailto:${business["email"]}");
                                           },
                                         ),
                                       )
@@ -205,7 +260,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         height: width * 0.12,
                                         child: FloatingActionButton(
                                           backgroundColor: Colors.white,
-                                          child: Image.asset("assets/images/www.png", width: width * 0.07, height: width * 0.07, fit: BoxFit.contain),
+                                          child: Image.asset(
+                                              "assets/images/www.png",
+                                              width: width * 0.07,
+                                              height: width * 0.07,
+                                              fit: BoxFit.contain),
                                           onPressed: () {
                                             launch("${business["website"]}");
                                           },
@@ -221,9 +280,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         height: width * 0.12,
                                         child: FloatingActionButton(
                                           backgroundColor: Colors.white,
-                                          child: Image.asset("assets/images/facebook.png", width: width * 0.07, height: width * 0.07, fit: BoxFit.contain),
+                                          child: Image.asset(
+                                              "assets/images/facebook.png",
+                                              width: width * 0.07,
+                                              height: width * 0.07,
+                                              fit: BoxFit.contain),
                                           onPressed: () {
-                                            launch("${business["facebook_url"]}");
+                                            launch(
+                                                "${business["facebook_url"]}");
                                           },
                                         ),
                                       )
@@ -237,9 +301,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         height: width * 0.12,
                                         child: FloatingActionButton(
                                           backgroundColor: Colors.white,
-                                          child: Image.asset("assets/images/instagram.png", width: width * 0.07, height: width * 0.07, fit: BoxFit.contain),
+                                          child: Image.asset(
+                                              "assets/images/instagram.png",
+                                              width: width * 0.07,
+                                              height: width * 0.07,
+                                              fit: BoxFit.contain),
                                           onPressed: () {
-                                            launch("${business["instagram_url"]}");
+                                            launch(
+                                                "${business["instagram_url"]}");
                                           },
                                         ),
                                       )
@@ -249,7 +318,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             SizedBox(
                               height: 30,
                             ),
-                            Text(business["description"], style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.grey, letterSpacing: .5, fontSize: 15, fontWeight: FontWeight.w500))),
+                            Text(business["description"],
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        color: Colors.grey,
+                                        letterSpacing: .5,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500))),
                             SizedBox(
                               height: 5,
                             ),
@@ -259,7 +334,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               direction: Axis.horizontal,
                               allowHalfRating: true,
                               itemCount: 5,
-                              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                              itemPadding:
+                                  EdgeInsets.symmetric(horizontal: 4.0),
                               itemBuilder: (context, _) => Icon(
                                 Icons.star,
                                 color: Colors.amber,
@@ -279,21 +355,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               children: [
                                 Container(
                                   width: width * 0.35,
-                                  height: height <= 667.0 ? height * 0.06 : height * 0.05,
+                                  height: height <= 667.0
+                                      ? height * 0.06
+                                      : height * 0.05,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(25.0),
-                                        side: BorderSide(color: AppColors.gold, width: 2),
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        side: BorderSide(
+                                            color: AppColors.gold, width: 2),
                                       ),
                                       backgroundColor: Colors.white,
                                     ),
                                     onPressed: () {
-                                      _isLoggedIn ? rateBusiness(business["busii_id"], businessRating) : showMessage("please login to access this feature", Colors.red, Icons.receipt);
+                                      _isLoggedIn
+                                          ? rateBusiness(business["busii_id"],
+                                              businessRating)
+                                          : showMessage(
+                                              "please login to access this feature",
+                                              Colors.red,
+                                              Icons.receipt);
                                     },
                                     child: Text(
                                       "Rate",
-                                      style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: height <= 667.0 ? 18 : 18, fontWeight: FontWeight.w400)),
+                                      style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                              color: Colors.black,
+                                              letterSpacing: .5,
+                                              fontSize:
+                                                  height <= 667.0 ? 18 : 18,
+                                              fontWeight: FontWeight.w400)),
                                     ),
                                   ),
                                 ),
@@ -302,21 +394,33 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ),
                                 Container(
                                   width: width * 0.35,
-                                  height: height <= 667.0 ? height * 0.06 : height * 0.05,
+                                  height: height <= 667.0
+                                      ? height * 0.06
+                                      : height * 0.05,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(25.0),
-                                        side: BorderSide(color: AppColors.gold, width: 2),
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        side: BorderSide(
+                                            color: AppColors.gold, width: 2),
                                       ),
                                       backgroundColor: Colors.white,
                                     ),
                                     onPressed: () {
-                                      MapUtils.openMap(double.parse(business["lat"]), double.parse(business["lng"]));
+                                      MapUtils.openMap(
+                                          double.parse(business["lat"]),
+                                          double.parse(business["lng"]));
                                     },
                                     child: Text(
                                       "Directions",
-                                      style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: height <= 667.0 ? 18 : 18, fontWeight: FontWeight.w400)),
+                                      style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                              color: Colors.black,
+                                              letterSpacing: .5,
+                                              fontSize:
+                                                  height <= 667.0 ? 18 : 18,
+                                              fontWeight: FontWeight.w400)),
                                     ),
                                   ),
                                 )
@@ -356,7 +460,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     children: [
                       Text(
                         widget.category["name"],
-                        style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: 26, fontWeight: FontWeight.w500)),
+                        style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                color: Colors.white,
+                                letterSpacing: .5,
+                                fontSize: 26,
+                                fontWeight: FontWeight.w500)),
                       ),
                     ],
                   ),
@@ -374,14 +483,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ? Center(
                         child: CircularProgressIndicator(
                           backgroundColor: Colors.black,
-                          valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(AppColors.gold),
                         ),
                       )
                     : businessList.isEmpty
                         ? Center(
                             child: Text(
                               "Coming soon",
-                              style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 26, fontWeight: FontWeight.w500)),
+                              style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      color: Colors.black,
+                                      letterSpacing: .5,
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w500)),
                             ),
                           )
                         : ListView.builder(
@@ -391,7 +506,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               return Padding(
                                 padding: EdgeInsets.only(bottom: 10, top: 0),
                                 child: GestureDetector(
-                                  onTap: () => showModalSheet(context, businessList[index]),
+                                  onTap: () => showModalSheet(
+                                      context, businessList[index]),
                                   child: CategoryWidget(
                                     width: width,
                                     business: businessList[index],
@@ -406,7 +522,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
 }
 
 class CategoryWidget extends StatefulWidget {
-  const CategoryWidget({Key? key, required this.width, required this.business, required this.isLoggedIn}) : super(key: key);
+  const CategoryWidget(
+      {Key? key,
+      required this.width,
+      required this.business,
+      required this.isLoggedIn})
+      : super(key: key);
 
   final double width;
   final Map<String, dynamic> business;
@@ -419,15 +540,28 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   bool _isFavorite = false;
 
   showMessage(String message, Color color, IconData iconData) {
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.black, textColor: Colors.white, fontSize: 16.0);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   addFavorite(String businessId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
+    Map<String, String> requestHeaders = {
+      'era-token': prefs.getString("token") ?? ''
+    };
     Map<String, String> data = {"id": businessId};
     var jsonData = null;
-    var reponse = await http.post(Uri.parse("${Constants.BASE_URL}/user/Favoriteunfavorite/add_to_favorite"), body: json.encode(data), headers: requestHeaders);
+    var reponse = await http.post(
+        Uri.parse(
+            "${Constants.BASE_URL}/user/Favoriteunfavorite/add_to_favorite"),
+        body: json.encode(data),
+        headers: requestHeaders);
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       var data = jsonData["data"];
@@ -443,10 +577,16 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 
   removeFavorite(String businessId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
+    Map<String, String> requestHeaders = {
+      'era-token': prefs.getString("token") ?? ''
+    };
     Map<String, String> data = {"id": businessId};
     var jsonData = null;
-    var reponse = await http.post(Uri.parse("${Constants.BASE_URL}/user/Favoriteunfavorite/remove_to_favorite"), body: json.encode(data), headers: requestHeaders);
+    var reponse = await http.post(
+        Uri.parse(
+            "${Constants.BASE_URL}/user/Favoriteunfavorite/remove_to_favorite"),
+        body: json.encode(data),
+        headers: requestHeaders);
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       var data = jsonData["data"];
@@ -476,7 +616,10 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                   padding: EdgeInsets.only(right: 10),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
-                    child: Image.network(widget.business["business_img"], width: widget.width * 0.25, height: widget.width * 0.25, fit: BoxFit.cover),
+                    child: Image.network(widget.business["business_img"],
+                        width: widget.width * 0.25,
+                        height: widget.width * 0.25,
+                        fit: BoxFit.cover),
                   )),
               Container(
                   width: widget.width * 0.56,
@@ -491,7 +634,12 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
-                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 16, fontWeight: FontWeight.w600))),
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    color: Colors.black,
+                                    letterSpacing: .5,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600))),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -509,7 +657,12 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
-                                style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.grey, letterSpacing: .5, fontSize: 13, fontWeight: FontWeight.w500))),
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        color: Colors.grey,
+                                        letterSpacing: .5,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500))),
                           )
                         ],
                       ),
@@ -529,14 +682,25 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
-                                style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.grey, letterSpacing: .5, fontSize: 13, fontWeight: FontWeight.w500))),
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        color: Colors.grey,
+                                        letterSpacing: .5,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500))),
                           ),
                           Expanded(
-                            child: Text("${double.parse(widget.business["distance"].toStringAsFixed(2))} Mi",
+                            child: Text(
+                                "${double.parse(widget.business["distance"].toStringAsFixed(2))} Mi",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
-                                style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.grey, letterSpacing: .5, fontSize: 13, fontWeight: FontWeight.w500))),
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        color: Colors.grey,
+                                        letterSpacing: .5,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500))),
                           ),
                           InkWell(
                             onTap: () {
@@ -544,13 +708,21 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                                 setState(() {
                                   _isFavorite = !_isFavorite;
                                 });
-                                _isFavorite ? addFavorite(widget.business["busii_id"]) : removeFavorite(widget.business["busii_id"]);
+                                _isFavorite
+                                    ? addFavorite(widget.business["busii_id"])
+                                    : removeFavorite(
+                                        widget.business["busii_id"]);
                               } else {
-                                showMessage("please login to access this feature", Colors.red, Icons.receipt);
+                                showMessage(
+                                    "please login to access this feature",
+                                    Colors.red,
+                                    Icons.receipt);
                               }
                             },
                             child: Icon(
-                              _isFavorite ? Icons.bookmark : Icons.bookmark_border,
+                              _isFavorite
+                                  ? Icons.bookmark
+                                  : Icons.bookmark_border,
                               size: 30,
                               color: AppColors.gold,
                             ),

@@ -6,7 +6,8 @@ import 'package:bbp/common/mytextfield.dart';
 import 'package:bbp/utils/app_colors.dart';
 import 'package:bbp/utils/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -57,14 +58,27 @@ class _FeatureScreenState extends State<FeatureScreen> {
   }
 
   businessInquiry(
-      String contactName, String companyTitle, String contactPhone, String contactEmail, String businessName, String businessPhone, String businessEmail, String businessAddress, File file) async {
+      String contactName,
+      String companyTitle,
+      String contactPhone,
+      String contactEmail,
+      String businessName,
+      String businessPhone,
+      String businessEmail,
+      String businessAddress,
+      File file) async {
     setState(() {
       _isLoading = true;
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
+    Map<String, String> requestHeaders = {
+      'era-token': prefs.getString("token") ?? ''
+    };
     var jsonData = null;
-    var request = http.MultipartRequest('POST', Uri.parse('${Constants.BASE_URL}/business/BusinessInquiry/create_business_inquiry'));
+    var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            '${Constants.BASE_URL}/business/BusinessInquiry/create_business_inquiry'));
     request.headers.addAll(requestHeaders);
     request.fields["inq_person"] = contactName;
     request.fields["inq_busi_title"] = companyTitle;
@@ -76,7 +90,8 @@ class _FeatureScreenState extends State<FeatureScreen> {
     request.fields["inq_busi_add"] = businessAddress;
 
     if (file != null) {
-      request.files.add(await http.MultipartFile.fromPath('inq_busi_logo', file.path));
+      request.files
+          .add(await http.MultipartFile.fromPath('inq_busi_logo', file.path));
     }
     var res = await request.send();
     print(res.statusCode);
@@ -98,36 +113,56 @@ class _FeatureScreenState extends State<FeatureScreen> {
       showMessage("Please enter contact person name", Colors.red, Icons.close);
       return false;
     } else {
-      if (_companyTitle == null || _companyTitle.isEmpty || _companyTitle == "") {
-        showMessage("Please enter title with the company", Colors.red, Icons.close);
+      if (_companyTitle == null ||
+          _companyTitle.isEmpty ||
+          _companyTitle == "") {
+        showMessage(
+            "Please enter title with the company", Colors.red, Icons.close);
         return false;
       } else {
-        if (_contactPhone == null || _contactPhone.isEmpty || _contactPhone == "") {
+        if (_contactPhone == null ||
+            _contactPhone.isEmpty ||
+            _contactPhone == "") {
           showMessage("Please enter contact phone", Colors.red, Icons.close);
           return false;
         } else {
-          if (_contactEmail == null || _contactEmail.isEmpty || _contactEmail == "") {
+          if (_contactEmail == null ||
+              _contactEmail.isEmpty ||
+              _contactEmail == "") {
             showMessage("Please enter contact email", Colors.red, Icons.close);
             return false;
           } else {
-            if (_businessName == null || _businessName.isEmpty || _businessName == "") {
-              showMessage("Please enter business name", Colors.red, Icons.close);
+            if (_businessName == null ||
+                _businessName.isEmpty ||
+                _businessName == "") {
+              showMessage(
+                  "Please enter business name", Colors.red, Icons.close);
               return false;
             } else {
-              if (_businessPhone == null || _businessPhone.isEmpty || _businessPhone == "") {
-                showMessage("Please enter business phone", Colors.red, Icons.close);
+              if (_businessPhone == null ||
+                  _businessPhone.isEmpty ||
+                  _businessPhone == "") {
+                showMessage(
+                    "Please enter business phone", Colors.red, Icons.close);
                 return false;
               } else {
-                if (_businessEmail == null || _businessEmail.isEmpty || _businessEmail == "") {
-                  showMessage("Please enter business email", Colors.red, Icons.close);
+                if (_businessEmail == null ||
+                    _businessEmail.isEmpty ||
+                    _businessEmail == "") {
+                  showMessage(
+                      "Please enter business email", Colors.red, Icons.close);
                   return false;
                 } else {
-                  if (_businessAddress == null || _businessAddress.isEmpty || _businessAddress == "") {
-                    showMessage("Please enter business address", Colors.red, Icons.close);
+                  if (_businessAddress == null ||
+                      _businessAddress.isEmpty ||
+                      _businessAddress == "") {
+                    showMessage("Please enter business address", Colors.red,
+                        Icons.close);
                     return false;
                   } else {
                     if (_image == null) {
-                      showMessage("Please select the image", Colors.red, Icons.close);
+                      showMessage(
+                          "Please select the image", Colors.red, Icons.close);
                       return false;
                     } else {
                       return true;
@@ -143,7 +178,14 @@ class _FeatureScreenState extends State<FeatureScreen> {
   }
 
   showMessage(String message, Color color, IconData iconData) {
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.black, textColor: Colors.white, fontSize: 16.0);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   clearText() {
@@ -167,7 +209,9 @@ class _FeatureScreenState extends State<FeatureScreen> {
         appBar: AppBar(
           title: Text(
             "Get featured",
-            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 22)),
+            style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                    color: Colors.black, letterSpacing: .5, fontSize: 22)),
           ),
           backgroundColor: Colors.white,
           elevation: 2.0,
@@ -298,7 +342,16 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           isBackground: true,
                           onPressed: () {
                             if (checkValidation()) {
-                              businessInquiry(_contactName, _companyTitle, _contactPhone, _contactEmail, _businessName, _businessPhone, _businessEmail, _businessAddress, _image!);
+                              businessInquiry(
+                                  _contactName,
+                                  _companyTitle,
+                                  _contactPhone,
+                                  _contactEmail,
+                                  _businessName,
+                                  _businessPhone,
+                                  _businessEmail,
+                                  _businessAddress,
+                                  _image!);
                             }
                           },
                         ),

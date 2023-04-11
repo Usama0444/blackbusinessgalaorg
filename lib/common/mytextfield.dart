@@ -8,11 +8,19 @@ class MyTextField extends StatelessWidget {
   final Function onChanged;
   final bool obscureText;
   final bool? isEnabled;
-  final Function? onTap;
+  var onTap;
   final bool? isReadOnly;
-  const MyTextField(
-      {Key? key, required this.placeholder, required this.leftIcon, required this.textController, required this.onChanged, required this.obscureText, this.isEnabled, this.onTap, this.isReadOnly})
-      : super(key: key);
+  MyTextField({
+    Key? key,
+    required this.placeholder,
+    required this.leftIcon,
+    required this.textController,
+    required this.onChanged,
+    required this.obscureText,
+    this.isEnabled,
+    this.onTap,
+    this.isReadOnly,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -22,7 +30,7 @@ class MyTextField extends StatelessWidget {
       width: width * 0.85,
       height: height <= 667.0 ? height * 0.07 : height * 0.06,
       child: TextField(
-        onTap: onTap!() == null ? () {} : onTap!(),
+        onTap: onTap() ?? () {},
         enabled: isEnabled,
         obscureText: obscureText,
         onChanged: onChanged(),
