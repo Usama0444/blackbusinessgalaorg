@@ -48,17 +48,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
   }
 
-  _asyncFileUpload(File file, String? name, String? email, String? username,
-      String? password) async {
+  _asyncFileUpload(File file, String? name, String? email, String? username, String? password) async {
     setState(() {
       _isLoading = true;
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {
-      'era-token': prefs.getString("token") ?? ''
-    };
-    var request = http.MultipartRequest('POST',
-        Uri.parse('${Constants.BASE_URL}/user/editProfile/update_profile'));
+    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
+    var request = http.MultipartRequest('POST', Uri.parse('${Constants.BASE_URL}/user/editProfile/update_profile'));
     request.headers.addAll(requestHeaders);
     request.fields["name"] = name!;
     request.fields["username"] = username!;
@@ -67,8 +63,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       request.fields["password"] = password;
     }
     if (file != null) {
-      request.files
-          .add(await http.MultipartFile.fromPath('pro_img', file.path));
+      request.files.add(await http.MultipartFile.fromPath('pro_img', file.path));
     }
     var res = await request.send();
     print(res.statusCode);
@@ -85,25 +80,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   showMessage(String message, Color color, IconData iconData) {
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.black, textColor: Colors.white, fontSize: 16.0);
   }
 
   getProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {
-      'era-token': prefs.getString("token") ?? ''
-    };
+    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
     var jsonData = null;
-    var reponse = await http.get(
-        Uri.parse("${Constants.BASE_URL}/user/profile/profile"),
-        headers: requestHeaders);
+    var reponse = await http.get(Uri.parse("${Constants.BASE_URL}/user/profile/profile"), headers: requestHeaders);
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       var data = jsonData["data"];
@@ -128,13 +112,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   updateProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {
-      'era-token': prefs.getString("token") ?? ''
-    };
+    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
     var jsonData = null;
-    var reponse = await http.get(
-        Uri.parse("${Constants.BASE_URL}/user/editProfile/update_profile"),
-        headers: requestHeaders);
+    var reponse = await http.get(Uri.parse("${Constants.BASE_URL}/user/editProfile/update_profile"), headers: requestHeaders);
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       var data = jsonData["data"];
@@ -178,9 +158,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         title: Text(
           "Edit Profile",
-          style: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                  color: Colors.black, letterSpacing: .5, fontSize: 22)),
+          style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 22)),
         ),
         backgroundColor: Colors.white,
         elevation: 2.0,
@@ -219,6 +197,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   height: 85,
                                 ),
                                 MyTextField(
+                                  onTap: () {},
                                   isEnabled: true,
                                   placeholder: "Name",
                                   leftIcon: Icons.person,
@@ -230,6 +209,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   height: 15,
                                 ),
                                 MyTextField(
+                                  onTap: () {},
                                   isEnabled: false,
                                   placeholder: "Username",
                                   leftIcon: Icons.account_circle,
@@ -241,6 +221,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   height: 15,
                                 ),
                                 MyTextField(
+                                  onTap: () {},
                                   isEnabled: false,
                                   placeholder: "Email",
                                   leftIcon: Icons.email,
@@ -252,6 +233,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   height: 15,
                                 ),
                                 MyTextField(
+                                  onTap: () {},
                                   isEnabled: true,
                                   placeholder: "Password",
                                   leftIcon: Icons.lock,
@@ -265,13 +247,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   isBackground: true,
                                   onPressed: () {
                                     if (checkValidation()) {
-                                      if (_password == null ||
-                                          _password == "") {
-                                        _asyncFileUpload(_image!, _name, _email,
-                                            _username, "");
+                                      if (_password == null || _password == "") {
+                                        _asyncFileUpload(_image!, _name, _email, _username, "");
                                       } else {
-                                        _asyncFileUpload(_image!, _name, _email,
-                                            _username, _password);
+                                        _asyncFileUpload(_image!, _name, _email, _username, _password);
                                       }
                                     }
                                   },
@@ -292,10 +271,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   child: ClipOval(
                                     child: _image == null
                                         ? _profile!["pro_img"] == ""
-                                            ? Image.network(
-                                                "https://cdn0.iconfinder.com/data/icons/social-media-network-4/48/male_avatar-512.png",
-                                                width: width * 0.28,
-                                                height: width * 0.28)
+                                            ? Image.network("https://cdn0.iconfinder.com/data/icons/social-media-network-4/48/male_avatar-512.png", width: width * 0.28, height: width * 0.28)
                                             : Image.network(
                                                 _profile!["pro_img"],
                                                 width: width * 0.28,

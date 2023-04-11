@@ -25,18 +25,20 @@ class _SignupScreenState extends State<SignupScreen> {
   final userTextController = TextEditingController();
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
-  String _name = '';
-  String _username = '';
-  String _email = '';
-  String _password = '';
 
-  signup(String name, String username, String email, String password) async {
-    setState(() {
-      _isLoading = true;
-    });
+  signup(
+    String name,
+    String username,
+    String email,
+    String password,
+  ) async {
     Map<String, String> data = {"email": email, "name": name, "username": username, "password": password, "fcm_token": "21316854azc"};
     var jsonData = null;
     var reponse = await http.post(Uri.parse("${Constants.BASE_URL}/user/reg/create_user"), body: json.encode(data));
+    print('&&&&&&&&&&&&&&&&&&');
+    print('response $reponse');
+    print('&&&&&&&&&&&&&&&&&&');
+
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       if (jsonData["status"]) {
@@ -59,40 +61,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   showMessage(String message, Color color, IconData iconData) {
     Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.black, textColor: Colors.white, fontSize: 16.0);
-    // scaffoldKey.currentState.showSnackBar(SnackBar(
-    //   content: Container(
-    //     width: double.infinity,
-    //     height: 50,
-    //     child: Center(
-    //       child: Row(
-    //         children: [
-    //           Expanded(
-    //             child: Icon(iconData),
-    //             flex: 1,
-    //           ),
-    //           SizedBox(
-    //             width: 10,
-    //           ),
-    //           Expanded(
-    //             child: Container(
-    //               child: Text(message,
-    //                   style: GoogleFonts.poppins(
-    //                       textStyle: TextStyle(
-    //                           color: Colors.white,
-    //                           letterSpacing: .5,
-    //                           fontSize: 16))),
-    //             ),
-    //             flex: 8,
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    //   backgroundColor: color,
-    //   // behavior: SnackBarBehavior.floating,
-    //   shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.all(Radius.circular(10))),
-    // ));
   }
 
   clearTextInput() {
@@ -103,19 +71,19 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   checkValidation() {
-    if (_name == null || _name.isEmpty || _name == "") {
+    if (nameTextController.text == null || nameTextController.text.isEmpty || nameTextController.text == "") {
       showMessage("Please enter name", Colors.red, Icons.close);
       return false;
     } else {
-      if (_username == null || _username.isEmpty || _username == "") {
+      if (userTextController.text == null || userTextController.text.isEmpty || userTextController.text == "") {
         showMessage("Please enter username", Colors.red, Icons.close);
         return false;
       } else {
-        if (_email == null || _email.isEmpty || _email == "") {
+        if (emailTextController.text == null || emailTextController.text.isEmpty || emailTextController.text == "") {
           showMessage("Please enter email", Colors.red, Icons.close);
           return false;
         } else {
-          if (_password == null || _password.isEmpty || _password == "") {
+          if (passwordTextController.text == null || passwordTextController.text.isEmpty || passwordTextController.text == "") {
             showMessage("Please enter password", Colors.red, Icons.close);
             return false;
           } else {
@@ -162,64 +130,92 @@ class _SignupScreenState extends State<SignupScreen> {
                         leftIcon: Icons.person,
                         textController: nameTextController,
                         obscureText: false,
-                        onChanged: (text) => _name = text,
+                        onChanged: (text) => nameTextController.text = text,
+                        onTap: () {},
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       MyTextField(
                         placeholder: "Username",
+                        onTap: () {},
                         leftIcon: Icons.account_circle,
                         textController: userTextController,
                         obscureText: false,
-                        onChanged: (text) => _username = text,
+                        onChanged: (text) => userTextController.text = text,
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       MyTextField(
                         placeholder: "Email",
+                        onTap: () {},
                         leftIcon: Icons.email,
                         textController: emailTextController,
                         obscureText: false,
-                        onChanged: (text) => _email = text,
+                        onChanged: (text) => emailTextController.text = text,
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       MyTextField(
                         placeholder: "Password",
+                        onTap: () {},
                         leftIcon: Icons.lock,
                         textController: passwordTextController,
                         obscureText: true,
-                        onChanged: (text) => _password = text,
+                        onChanged: (text) => passwordTextController.text = text,
                       ),
                       SizedBox(height: 45),
-                      MyRaisedButton(
-                        title: "Sign up",
-                        isBackground: true,
-                        onPressed: () {
-                          if (checkValidation()) {
-                            signup(_name, _username, _email, _password);
-                          }
-                        },
+                      // MyRaisedButton(
+                      //   title: "Sign up",
+                      //   isBackground: true,
+                      //   onPressed: () {
+                      // print('press');
+                      // if (checkValidation()) {
+                      //   signup(nameTextController.text, userTextController.text, emailTextController.text, passwordTextController.text);
+                      // }
+                      //   },
+                      // ),
+                      Container(
+                        width: width * 0.85,
+                        height: height <= 667.0 ? height * 0.07 : height * 0.06,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                              side: BorderSide(color: Colors.black, width: 0),
+                            ),
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () {
+                            print('press');
+                            if (checkValidation()) {
+                              signup(nameTextController.text, userTextController.text, emailTextController.text, passwordTextController.text);
+                            }
+                          },
+                          child: Text(
+                            'sign up'.toUpperCase(),
+                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: height <= 667.0 ? 16 : 18, fontWeight: FontWeight.bold)),
+                          ),
+                        ),
                       ),
                       SizedBox(height: 10),
                       Text(
                         'OR',
                         style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black87, letterSpacing: .5, fontSize: 16)),
                       ),
-                      SizedBox(height: 10),
-                      MyRaisedButton(
-                        title: "Sign in",
-                        isBackground: false,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()),
-                          );
-                        },
-                      ),
+                      // SizedBox(height: 10),
+                      // MyRaisedButton(
+                      //   title: "Sign in",
+                      //   isBackground: true,
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(builder: (context) => LoginScreen()),
+                      //     );
+                      //   },
+                      // ),
                       SizedBox(
                         height: height * 0.03,
                       ),

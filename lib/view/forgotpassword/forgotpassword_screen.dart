@@ -98,7 +98,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       SizedBox(
                         height: 35,
                       ),
-                      MyTextField(textController: emailTextController, onChanged: (text) => _email = text, placeholder: "email", leftIcon: Icons.email, obscureText: false),
+                      MyTextField(onTap: () {}, textController: emailTextController, onChanged: (text) => _email = text, placeholder: "email", leftIcon: Icons.email, obscureText: false),
                       SizedBox(height: 45),
                       MyRaisedButton(
                         title: "Submit",

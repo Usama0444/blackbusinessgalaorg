@@ -70,30 +70,15 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
     }
   }
 
-  addBusiness(
-      String? businessName,
-      String? category,
-      String? hours,
-      String? phone,
-      String? address,
-      String? description,
-      String? website,
-      String? email,
-      String? fbUrl,
-      String? instagramUrl,
+  addBusiness(String? businessName, String? category, String? hours, String? phone, String? address, String? description, String? website, String? email, String? fbUrl, String? instagramUrl,
       File file) async {
     setState(() {
       _isLoading = true;
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {
-      'era-token': prefs.getString("token") ?? ''
-    };
+    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
     var jsonData = null;
-    var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            '${Constants.BASE_URL}/business/createBusiness/create_business'));
+    var request = http.MultipartRequest('POST', Uri.parse('${Constants.BASE_URL}/business/createBusiness/create_business'));
     request.headers.addAll(requestHeaders);
     request.fields["business_name"] = businessName!;
     request.fields["operating_hours"] = hours!;
@@ -107,8 +92,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
     request.fields["cat_id"] = _catId!;
 
     if (file != null) {
-      request.files
-          .add(await http.MultipartFile.fromPath('business_img', file.path));
+      request.files.add(await http.MultipartFile.fromPath('business_img', file.path));
     }
     var res = await request.send();
     print(res.statusCode);
@@ -127,13 +111,9 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
 
   getCategory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> requestHeaders = {
-      'era-token': prefs.getString("token") ?? ''
-    };
+    Map<String, String> requestHeaders = {'era-token': prefs.getString("token") ?? ''};
     var jsonData = null;
-    var reponse = await http.get(
-        Uri.parse("${Constants.BASE_URL}/user/category/categories"),
-        headers: requestHeaders);
+    var reponse = await http.get(Uri.parse("${Constants.BASE_URL}/user/category/categories"), headers: requestHeaders);
     if (reponse.statusCode == 200) {
       jsonData = json.decode(reponse.body);
       var data = jsonData["data"] as List;
@@ -189,11 +169,8 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
               showMessage("Please enter address", Colors.red, Icons.close);
               return false;
             } else {
-              if (_description == null ||
-                  _description!.isEmpty ||
-                  _description == "") {
-                showMessage(
-                    "Please enter description", Colors.red, Icons.close);
+              if (_description == null || _description!.isEmpty || _description == "") {
+                showMessage("Please enter description", Colors.red, Icons.close);
                 return false;
               } else {
                 if (_email == null || _email!.isEmpty || _email == "") {
@@ -201,8 +178,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                   return false;
                 } else {
                   if (_image == null) {
-                    showMessage(
-                        "Please select the image", Colors.red, Icons.close);
+                    showMessage("Please select the image", Colors.red, Icons.close);
                     return false;
                   } else {
                     return true;
@@ -217,14 +193,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   }
 
   showMessage(String? message, Color color, IconData iconData) {
-    Fluttertoast.showToast(
-        msg: message!,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    Fluttertoast.showToast(msg: message!, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.black, textColor: Colors.white, fontSize: 16.0);
   }
 
   clearText() {
@@ -250,9 +219,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
         appBar: AppBar(
           title: Text(
             "Add Business",
-            style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                    color: Colors.black, letterSpacing: .5, fontSize: 22)),
+            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 22)),
           ),
           backgroundColor: Colors.white,
           elevation: 2.0,
@@ -277,6 +244,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 30,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: bsNameTextController,
                           placeholder: "Business Name",
                           leftIcon: Icons.business,
@@ -301,6 +269,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 15,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: opreatingHoursTextController,
                           placeholder: "Operating Hours",
                           leftIcon: FontAwesome5.clock,
@@ -311,6 +280,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 15,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: phoneTextController,
                           placeholder: "Phone",
                           leftIcon: Icons.phone,
@@ -321,6 +291,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 15,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: addressTextController,
                           placeholder: "Address",
                           leftIcon: Entypo.address,
@@ -331,6 +302,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 15,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: descriptionTextController,
                           placeholder: "Description",
                           leftIcon: Icons.description,
@@ -341,6 +313,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 15,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: websiteController,
                           placeholder: "Website",
                           leftIcon: MaterialIcons.public,
@@ -351,6 +324,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 15,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: emailTextController,
                           placeholder: "Email",
                           leftIcon: Icons.email,
@@ -361,6 +335,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 15,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: fbTextController,
                           placeholder: "Facebook URL",
                           leftIcon: Entypo.facebook,
@@ -371,6 +346,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           height: 15,
                         ),
                         MyTextField(
+                          onTap: () {},
                           textController: instagramTextController,
                           placeholder: "Instagram URL",
                           leftIcon: Entypo.instagram,

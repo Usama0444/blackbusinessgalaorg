@@ -124,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 35,
                       ),
                       MyTextField(
+                        onTap: () {},
                         placeholder: "Username",
                         leftIcon: Icons.account_circle,
                         textController: userTextController,
@@ -139,6 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textController: passwordTextController,
                         obscureText: true,
                         onChanged: (text) => _password = text,
+                        onTap: () {},
                       ),
                       SizedBox(height: 45),
                       MyRaisedButton(

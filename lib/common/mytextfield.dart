@@ -8,7 +8,7 @@ class MyTextField extends StatelessWidget {
   final Function onChanged;
   final bool obscureText;
   final bool? isEnabled;
-  var onTap;
+  Function onTap;
   final bool? isReadOnly;
   MyTextField({
     Key? key,
@@ -18,7 +18,7 @@ class MyTextField extends StatelessWidget {
     required this.onChanged,
     required this.obscureText,
     this.isEnabled,
-    this.onTap,
+    required this.onTap,
     this.isReadOnly,
   }) : super(key: key);
   @override
@@ -33,7 +33,7 @@ class MyTextField extends StatelessWidget {
         onTap: onTap() ?? () {},
         enabled: isEnabled,
         obscureText: obscureText,
-        onChanged: onChanged(),
+        onChanged: onChanged == (v) {} ? (v) {} : (value) => {},
         controller: textController,
         readOnly: isReadOnly == null ? false : true,
         cursorColor: Colors.black,
