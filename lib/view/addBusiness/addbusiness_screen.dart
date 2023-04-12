@@ -35,19 +35,10 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   final emailTextController = TextEditingController();
   final fbTextController = TextEditingController();
   final instagramTextController = TextEditingController();
+  final hourseTextController = TextEditingController();
+  final websiteTextController = TextEditingController();
 
-  String? _bsName;
-  String? _category;
-  String? _hours;
-  String? _phone;
-  String? _address;
-  String? _description;
-  String? _website;
-  String? _email;
-  String? _fb;
-  String? _instagram;
   String? _catId;
-
   File? _image;
   final picker = ImagePicker();
 
@@ -70,8 +61,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
     }
   }
 
-  addBusiness(String? businessName, String? category, String? hours, String? phone, String? address, String? description, String? website, String? email, String? fbUrl, String? instagramUrl,
-      File file) async {
+  addBusiness(String businessName, String category, String hours, String phone, String address, String description, String website, String email, String fbUrl, String instagramUrl, File file) async {
     setState(() {
       _isLoading = true;
     });
@@ -80,15 +70,15 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
     var jsonData = null;
     var request = http.MultipartRequest('POST', Uri.parse('${Constants.BASE_URL}/business/createBusiness/create_business'));
     request.headers.addAll(requestHeaders);
-    request.fields["business_name"] = businessName!;
-    request.fields["operating_hours"] = hours!;
-    request.fields["phone"] = phone!;
-    request.fields["address"] = address!;
-    request.fields["description"] = description!;
-    request.fields["website"] = website!;
-    request.fields["email"] = email!;
-    request.fields["facebook_url"] = fbUrl!;
-    request.fields["instagram_url"] = instagramUrl!;
+    request.fields["business_name"] = businessName;
+    request.fields["operating_hours"] = hours;
+    request.fields["phone"] = phone;
+    request.fields["address"] = address;
+    request.fields["description"] = description;
+    request.fields["website"] = websiteTextController.text;
+    request.fields["email"] = email;
+    request.fields["facebook_url"] = fbUrl;
+    request.fields["instagram_url"] = instagramUrl;
     request.fields["cat_id"] = _catId!;
 
     if (file != null) {
@@ -105,7 +95,11 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
         });
       });
     } else {
-      // print(reponse.body);
+      print(res.statusCode);
+      setState(() {
+        _isLoading = false;
+      });
+      showMessage('${res.reasonPhrase}', Colors.red, Icons.error);
     }
   }
 
@@ -129,14 +123,14 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   }
 
   showPicker(BuildContext context) {
-    Picker picker = new Picker(
+    Picker picker = Picker(
         adapter: PickerDataAdapter<String>(pickerData: category),
         // changeToFirst: true,
         textAlign: TextAlign.center,
         columnPadding: const EdgeInsets.all(8.0),
         onConfirm: (Picker picker, List value) {
           categoryTextController.text = picker.getSelectedValues().first;
-          _category = picker.getSelectedValues().first;
+          categoryTextController.text = picker.getSelectedValues().first;
           categoryList.forEach((element) {
             if (element["name"] == picker.getSelectedValues().first) {
               setState(() {
@@ -149,31 +143,31 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   }
 
   checkValidation() {
-    if (_bsName == null || _bsName!.isEmpty || _bsName == "") {
+    if (bsNameTextController.text == null || bsNameTextController.text.isEmpty || bsNameTextController.text == "") {
       showMessage("Please enter business name", Colors.red, Icons.close);
       return false;
     } else {
-      if (_category == null || _category!.isEmpty || _category == "") {
+      if (categoryTextController.text == null || categoryTextController.text.isEmpty || categoryTextController.text == "") {
         showMessage("Please select category", Colors.red, Icons.close);
         return false;
       } else {
-        if (_hours == null || _hours!.isEmpty || _hours == "") {
+        if (hourseTextController.text == null || hourseTextController.text.isEmpty || hourseTextController.text == "") {
           showMessage("Please enter operating hours", Colors.red, Icons.close);
           return false;
         } else {
-          if (_phone == null || _phone!.isEmpty || _phone == "") {
+          if (phoneTextController.text == null || phoneTextController.text.isEmpty || phoneTextController.text == "") {
             showMessage("Please enter phone number", Colors.red, Icons.close);
             return false;
           } else {
-            if (_address == null || _address!.isEmpty || _address == "") {
+            if (addressTextController.text == null || addressTextController.text.isEmpty || addressTextController.text == "") {
               showMessage("Please enter address", Colors.red, Icons.close);
               return false;
             } else {
-              if (_description == null || _description!.isEmpty || _description == "") {
+              if (descriptionTextController.text == null || descriptionTextController.text.isEmpty || descriptionTextController.text == "") {
                 showMessage("Please enter description", Colors.red, Icons.close);
                 return false;
               } else {
-                if (_email == null || _email!.isEmpty || _email == "") {
+                if (emailTextController.text == null || emailTextController.text.isEmpty || emailTextController.text == "") {
                   showMessage("Please enter email", Colors.red, Icons.close);
                   return false;
                 } else {
@@ -219,14 +213,14 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
         appBar: AppBar(
           title: Text(
             "Add Business",
-            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 22)),
+            style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 22)),
           ),
           backgroundColor: Colors.white,
           elevation: 2.0,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: _isLoading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   backgroundColor: Colors.black,
                   valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
@@ -240,7 +234,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                   child: Center(
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         MyTextField(
@@ -249,34 +243,52 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           placeholder: "Business Name",
                           leftIcon: Icons.business,
                           obscureText: false,
-                          onChanged: (text) => _bsName = text,
+                          onChanged: (text) => bsNameTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        MyTextField(
-                          onTap: () {
-                            showPicker(context);
-                          },
-                          isReadOnly: true,
-                          textController: categoryTextController,
-                          placeholder: "Category",
-                          leftIcon: Icons.category,
-                          obscureText: false,
-                          onChanged: (text) => _category = text,
-                        ),
                         SizedBox(
+                          width: width * 0.85,
+                          height: height <= 667.0 ? height * 0.07 : height * 0.06,
+                          child: TextField(
+                            onTap: () {
+                              showPicker(context);
+                            },
+                            controller: categoryTextController,
+                            cursorColor: Colors.black,
+                            readOnly: true,
+                            decoration: new InputDecoration(
+                                contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                                prefixIcon: Icon(
+                                  Icons.category,
+                                  size: height <= 667.0 ? 23 : 25,
+                                ),
+                                border: new OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(25.0),
+                                  ),
+                                ),
+                                filled: true,
+                                hintStyle: new TextStyle(color: Colors.grey[800]),
+                                hintText: 'Category',
+                                isDense: true,
+                                fillColor: Colors.white70),
+                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: height <= 667.0 ? 14 : 16)),
+                          ),
+                        ),
+                        const SizedBox(
                           height: 15,
                         ),
                         MyTextField(
                           onTap: () {},
-                          textController: opreatingHoursTextController,
+                          textController: hourseTextController,
                           placeholder: "Operating Hours",
                           leftIcon: FontAwesome5.clock,
                           obscureText: false,
-                          onChanged: (text) => _hours = text,
+                          onChanged: (text) => hourseTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         MyTextField(
@@ -285,9 +297,9 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           placeholder: "Phone",
                           leftIcon: Icons.phone,
                           obscureText: false,
-                          onChanged: (text) => _phone = text,
+                          onChanged: (text) => phoneTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         MyTextField(
@@ -296,9 +308,9 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           placeholder: "Address",
                           leftIcon: Entypo.address,
                           obscureText: false,
-                          onChanged: (text) => _address = text,
+                          onChanged: (text) => addressTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         MyTextField(
@@ -307,20 +319,20 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           placeholder: "Description",
                           leftIcon: Icons.description,
                           obscureText: false,
-                          onChanged: (text) => _description = text,
+                          onChanged: (text) => descriptionTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         MyTextField(
                           onTap: () {},
-                          textController: websiteController,
+                          textController: websiteTextController,
                           placeholder: "Website",
                           leftIcon: MaterialIcons.public,
                           obscureText: false,
-                          onChanged: (text) => _website = text,
+                          onChanged: (text) => websiteTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         MyTextField(
@@ -329,9 +341,9 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           placeholder: "Email",
                           leftIcon: Icons.email,
                           obscureText: false,
-                          onChanged: (text) => _email = text,
+                          onChanged: (text) => emailTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         MyTextField(
@@ -340,9 +352,9 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           placeholder: "Facebook URL",
                           leftIcon: Entypo.facebook,
                           obscureText: false,
-                          onChanged: (text) => _fb = text,
+                          onChanged: (text) => fbTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         MyTextField(
@@ -351,9 +363,9 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           placeholder: "Instagram URL",
                           leftIcon: Entypo.instagram,
                           obscureText: false,
-                          onChanged: (text) => _instagram = text,
+                          onChanged: (text) => instagramTextController.text = text,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         InkWell(
@@ -377,29 +389,42 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                                   ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        MyRaisedButton(
-                          title: "Submit",
-                          isBackground: true,
-                          onPressed: () {
-                            if (checkValidation()) {
-                              addBusiness(
-                                _bsName,
-                                _category,
-                                _hours,
-                                _phone,
-                                _address,
-                                _description,
-                                _website,
-                                _email,
-                                _fb,
-                                _instagram,
-                                _image!,
-                              );
-                            }
-                          },
+                        const SizedBox(height: 20),
+                        Container(
+                          width: width * 0.85,
+                          height: height <= 667.0 ? height * 0.07 : height * 0.06,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                side: const BorderSide(color: Colors.black, width: 0),
+                              ),
+                              backgroundColor: Colors.black,
+                            ),
+                            onPressed: () {
+                              if (checkValidation()) {
+                                addBusiness(
+                                  bsNameTextController.text,
+                                  categoryTextController.text,
+                                  hourseTextController.text,
+                                  phoneTextController.text,
+                                  addressTextController.text,
+                                  descriptionTextController.text,
+                                  websiteTextController.text,
+                                  emailTextController.text,
+                                  fbTextController.text,
+                                  instagramTextController.text,
+                                  _image!,
+                                );
+                              }
+                            },
+                            child: Text(
+                              "Submit".toUpperCase(),
+                              style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: height <= 667.0 ? 16 : 18, fontWeight: FontWeight.bold)),
+                            ),
+                          ),
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                       ],
                     ),
                   ),

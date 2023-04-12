@@ -106,12 +106,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Center(
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Image.asset("assets/images/applogo.png", width: width * 0.7, height: height * 0.1, fit: BoxFit.contain),
-                      SizedBox(
-                        height: 35,
+                      Image.asset(
+                        "assets/images/applogo.png",
+                        width: width * 0.9,
+                        height: height * 0.25,
+                        fit: BoxFit.fitHeight,
                       ),
                       Text(
                         'Sign in',

@@ -32,6 +32,9 @@ class _SignupScreenState extends State<SignupScreen> {
     String email,
     String password,
   ) async {
+    setState(() {
+      _isLoading = true;
+    });
     Map<String, String> data = {"email": email, "name": name, "username": username, "password": password, "fcm_token": "21316854azc"};
     var jsonData = null;
     var reponse = await http.post(Uri.parse("${Constants.BASE_URL}/user/reg/create_user"), body: json.encode(data));
@@ -98,171 +101,198 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Scaffold(
-        key: scaffoldKey,
-        body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.black,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
-                ),
-              )
-            : SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 110,
-                      ),
-                      Image.asset("assets/images/applogo.png", width: width * 0.7, height: height * 0.1, fit: BoxFit.contain),
-                      SizedBox(
-                        height: 35,
-                      ),
-                      Text(
-                        'Create an account',
-                        style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: height <= 667.0 ? 24 : 26)),
-                      ),
-                      SizedBox(
-                        height: 35,
-                      ),
-                      MyTextField(
-                        placeholder: "Name",
-                        leftIcon: Icons.person,
-                        textController: nameTextController,
-                        obscureText: false,
-                        onChanged: (text) => nameTextController.text = text,
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      MyTextField(
-                        placeholder: "Username",
-                        onTap: () {},
-                        leftIcon: Icons.account_circle,
-                        textController: userTextController,
-                        obscureText: false,
-                        onChanged: (text) => userTextController.text = text,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      MyTextField(
-                        placeholder: "Email",
-                        onTap: () {},
-                        leftIcon: Icons.email,
-                        textController: emailTextController,
-                        obscureText: false,
-                        onChanged: (text) => emailTextController.text = text,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      MyTextField(
-                        placeholder: "Password",
-                        onTap: () {},
-                        leftIcon: Icons.lock,
-                        textController: passwordTextController,
-                        obscureText: true,
-                        onChanged: (text) => passwordTextController.text = text,
-                      ),
-                      SizedBox(height: 45),
-                      // MyRaisedButton(
-                      //   title: "Sign up",
-                      //   isBackground: true,
-                      //   onPressed: () {
-                      // print('press');
-                      // if (checkValidation()) {
-                      //   signup(nameTextController.text, userTextController.text, emailTextController.text, passwordTextController.text);
-                      // }
-                      //   },
-                      // ),
-                      Container(
-                        width: width * 0.85,
-                        height: height <= 667.0 ? height * 0.07 : height * 0.06,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                              side: BorderSide(color: Colors.black, width: 0),
-                            ),
-                            backgroundColor: Colors.black,
-                          ),
-                          onPressed: () {
-                            print('press');
-                            if (checkValidation()) {
-                              signup(nameTextController.text, userTextController.text, emailTextController.text, passwordTextController.text);
-                            }
-                          },
-                          child: Text(
-                            'sign up'.toUpperCase(),
-                            style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: height <= 667.0 ? 16 : 18, fontWeight: FontWeight.bold)),
-                          ),
+    return SafeArea(
+      child: Scaffold(
+          key: scaffoldKey,
+          body: _isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.black,
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/applogo.png",
+                          width: width * 0.9,
+                          height: height * 0.25,
+                          fit: BoxFit.fitHeight,
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'OR',
-                        style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black87, letterSpacing: .5, fontSize: 16)),
-                      ),
-                      // SizedBox(height: 10),
-                      // MyRaisedButton(
-                      //   title: "Sign in",
-                      //   isBackground: true,
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(builder: (context) => LoginScreen()),
-                      //     );
-                      //   },
-                      // ),
-                      SizedBox(
-                        height: height * 0.03,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => DashboardScreen()), (route) => false);
-                        },
-                        child: Container(
+
+                        Text(
+                          'Create an account',
+                          style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: height <= 667.0 ? 24 : 26)),
+                        ),
+                        const SizedBox(
+                          height: 35,
+                        ),
+                        MyTextField(
+                          placeholder: "Name",
+                          leftIcon: Icons.person,
+                          textController: nameTextController,
+                          obscureText: false,
+                          onChanged: (text) => nameTextController.text = text,
+                          onTap: () {},
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        MyTextField(
+                          placeholder: "Username",
+                          onTap: () {},
+                          leftIcon: Icons.account_circle,
+                          textController: userTextController,
+                          obscureText: false,
+                          onChanged: (text) => userTextController.text = text,
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        MyTextField(
+                          placeholder: "Email",
+                          onTap: () {},
+                          leftIcon: Icons.email,
+                          textController: emailTextController,
+                          obscureText: false,
+                          onChanged: (text) => emailTextController.text = text,
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        MyTextField(
+                          placeholder: "Password",
+                          onTap: () {},
+                          leftIcon: Icons.lock,
+                          textController: passwordTextController,
+                          obscureText: true,
+                          onChanged: (text) => passwordTextController.text = text,
+                        ),
+                        const SizedBox(height: 45),
+                        // MyRaisedButton(
+                        //   title: "Sign up",
+                        //   isBackground: true,
+                        //   onPressed: () {
+                        // print('press');
+                        // if (checkValidation()) {
+                        //   signup(nameTextController.text, userTextController.text, emailTextController.text, passwordTextController.text);
+                        // }
+                        //   },
+                        // ),
+                        Container(
                           width: width * 0.85,
-                          height: height * 0.03,
-                          child: Text(
-                            "Skip".toUpperCase(),
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                                textStyle: TextStyle(color: AppColors.gold, letterSpacing: .5, fontWeight: FontWeight.bold, decoration: TextDecoration.underline, fontSize: height <= 667.0 ? 14 : 16)),
+                          height: height <= 667.0 ? height * 0.07 : height * 0.06,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                side: const BorderSide(color: Colors.black, width: 0),
+                              ),
+                              backgroundColor: Colors.black,
+                            ),
+                            onPressed: () {
+                              print('press');
+                              if (checkValidation()) {
+                                signup(nameTextController.text, userTextController.text, emailTextController.text, passwordTextController.text);
+                              }
+                            },
+                            child: Text(
+                              'sign up'.toUpperCase(),
+                              style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: height <= 667.0 ? 16 : 18, fontWeight: FontWeight.bold)),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: height * 0.03,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          launch("http://app.blackbusinesspensacola.org/tc.html");
-                        },
-                        child: Container(
+
+                        const SizedBox(height: 10),
+                        Text(
+                          'OR',
+                          style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black87, letterSpacing: .5, fontSize: 16)),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: width * 0.85,
+                          height: height <= 667.0 ? height * 0.07 : height * 0.06,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                side: const BorderSide(color: AppColors.gold, width: 2),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => LoginScreen()),
+                              );
+                            },
+                            child: Text(
+                              "Sign in".toUpperCase(),
+                              style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: height <= 667.0 ? 16 : 18, fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                        ),
+                        // MyRaisedButton(
+                        //   title: "Sign in",
+                        //   isBackground: true,
+                        // onPressed: () {
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => LoginScreen()),
+                        //   );
+                        // },
+                        // ),
+                        SizedBox(
+                          height: height * 0.03,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => DashboardScreen()), (route) => false);
+                          },
+                          child: Container(
                             width: width * 0.85,
                             height: height * 0.03,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "By signing up you agree to our".toUpperCase(),
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: height <= 667.0 ? 10 : 11)),
-                                ),
-                                Text(
-                                  " terms of service".toUpperCase(),
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(textStyle: TextStyle(color: AppColors.gold, letterSpacing: .5, fontWeight: FontWeight.bold, fontSize: height <= 667.0 ? 10 : 11)),
-                                ),
-                              ],
-                            )),
-                      )
-                    ],
+                            child: Text(
+                              "Skip".toUpperCase(),
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  textStyle:
+                                      TextStyle(color: AppColors.gold, letterSpacing: .5, fontWeight: FontWeight.bold, decoration: TextDecoration.underline, fontSize: height <= 667.0 ? 14 : 16)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.03,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            launch("http://app.blackbusinesspensacola.org/tc.html");
+                          },
+                          child: Container(
+                              width: width * 0.85,
+                              height: height * 0.03,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "By signing up you agree to our".toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: height <= 667.0 ? 10 : 11)),
+                                  ),
+                                  Text(
+                                    " terms of service".toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(textStyle: TextStyle(color: AppColors.gold, letterSpacing: .5, fontWeight: FontWeight.bold, fontSize: height <= 667.0 ? 10 : 11)),
+                                  ),
+                                ],
+                              )),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ));
+                )),
+    );
   }
 }

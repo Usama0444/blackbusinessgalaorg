@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return new Container(
               height: height * 0.7,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
                 color: Colors.grey[100],
               ),
               // width: double.infinity,
@@ -154,12 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: width,
                       height: height * 0.25,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
                         child: Image.network(business["business_img"], width: width, height: height * 0.25, fit: BoxFit.fill),
                       ),
                     ),
                     Container(
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                        padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
                         width: width,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -168,23 +168,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(business["business_name"],
                                 softWrap: false,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 24, fontWeight: FontWeight.bold))),
+                                style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 24, fontWeight: FontWeight.bold))),
                             Row(
                               children: [
-                                Text(business["cat_name"], style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 16, fontWeight: FontWeight.w400))),
-                                SizedBox(
+                                Text(business["cat_name"], style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 16, fontWeight: FontWeight.w400))),
+                                const SizedBox(
                                   width: 5,
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.star,
                                   size: 18,
                                   color: AppColors.gold,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
-                                Text(businessRating, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 16, fontWeight: FontWeight.w400))),
-                                SizedBox(
+                                Text(businessRating, style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, letterSpacing: .5, fontSize: 16, fontWeight: FontWeight.w400))),
+                                const SizedBox(
                                   width: 5,
                                 ),
                               ],
@@ -193,10 +193,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         )),
                     Container(
                         width: width,
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 30,
                             ),
                             Row(
@@ -214,8 +214,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                         ),
                                       )
-                                    : Center(),
-                                SizedBox(
+                                    : const Center(),
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 business["email"] != ""
@@ -230,8 +230,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                         ),
                                       )
-                                    : Center(),
-                                SizedBox(
+                                    : const Center(),
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 business["website"] != ""
@@ -246,8 +246,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                         ),
                                       )
-                                    : Center(),
-                                SizedBox(
+                                    : const Center(),
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 business["facebook_url"] != ""
@@ -262,8 +262,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                         ),
                                       )
-                                    : Center(),
-                                SizedBox(
+                                    : const Center(),
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 business["instagram_url"] != ""
@@ -278,14 +278,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                         ),
                                       )
-                                    : Center(),
+                                    : const Center(),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 30,
                             ),
-                            Text(business["description"], style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.grey, letterSpacing: .5, fontSize: 15, fontWeight: FontWeight.w500))),
-                            SizedBox(
+                            Text(business["description"], style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.grey, letterSpacing: .5, fontSize: 15, fontWeight: FontWeight.w500))),
+                            const SizedBox(
                               height: 5,
                             ),
                             RatingBar.builder(
@@ -294,8 +294,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               direction: Axis.horizontal,
                               allowHalfRating: true,
                               itemCount: 5,
-                              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                              itemBuilder: (context, _) => Icon(
+                              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => const Icon(
                                 Icons.star,
                                 color: Colors.amber,
                               ),
@@ -306,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 print(rating);
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 30,
                             ),
                             Row(
@@ -319,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(25.0),
-                                        side: BorderSide(color: AppColors.gold, width: 2),
+                                        side: const BorderSide(color: AppColors.gold, width: 2),
                                       ),
                                       backgroundColor: Colors.white,
                                     ),
@@ -332,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 Container(
@@ -342,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(25.0),
-                                        side: BorderSide(color: AppColors.gold, width: 2),
+                                        side: const BorderSide(color: AppColors.gold, width: 2),
                                       ),
                                       backgroundColor: Colors.white,
                                     ),
@@ -375,22 +375,22 @@ class _HomeScreenState extends State<HomeScreen> {
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(scaleFactor)
         ..rotateY(isDrawerOpen ? -0.5 : 0.0),
-      duration: Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(isDrawerOpen ? 40.0 : 0.0)),
       // color: Colors.white,
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 22,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 isDrawerOpen
                     ? IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.close,
                           size: 35,
                         ),
@@ -403,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         })
                     : IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.menu,
                           size: 35,
                         ),
@@ -415,9 +415,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             isDrawerOpen = true;
                           });
                         }),
-                Image.asset("assets/images/applogo.png", width: width * 0.18, height: width * 0.18, fit: BoxFit.contain),
+                Image.asset(
+                  "assets/images/applogo.png",
+                  width: width * 0.5,
+                  height: height * 0.15,
+                  fit: BoxFit.fitHeight,
+                ),
                 IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.add,
                       size: 35,
                     ),
@@ -433,7 +438,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: height * 0.01, bottom: height * 0.01),
+            margin: EdgeInsets.only(bottom: height * 0.01),
             // padding: EdgeInsets.all(5),
             width: width * 0.85,
             height: height <= 667.0 ? height * 0.07 : height * 0.06,
@@ -456,8 +461,8 @@ class _HomeScreenState extends State<HomeScreen> {
               cursorColor: Colors.black,
               decoration: new InputDecoration(
                 filled: true,
-                fillColor: Color(0xffDCDCDC),
-                contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                fillColor: const Color(0xffDCDCDC),
+                contentPadding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                 prefixIcon: Icon(
                   Icons.search,
                   size: height <= 667.0 ? 23 : 25,
@@ -466,7 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: const BorderRadius.all(
                     const Radius.circular(25.0),
                   ),
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     width: 0,
                     style: BorderStyle.none,
                   ),
@@ -479,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           _isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     backgroundColor: Colors.black,
                     valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
@@ -488,7 +493,7 @@ class _HomeScreenState extends State<HomeScreen> {
               : Expanded(
                   child: SingleChildScrollView(
                       child: Padding(
-                  padding: EdgeInsets.only(left: 15, top: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 15, top: 10, right: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -497,10 +502,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           "Discover",
                           textAlign: TextAlign.left,
-                          style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontWeight: FontWeight.w600, fontSize: 24)),
+                          style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, letterSpacing: .5, fontWeight: FontWeight.w600, fontSize: 24)),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
@@ -512,7 +517,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return Padding(
-                                  padding: EdgeInsets.only(right: 20),
+                                  padding: const EdgeInsets.only(right: 20),
                                   child: Card(
                                       semanticContainer: true,
                                       color: Colors.transparent,
@@ -546,7 +551,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       top: 10,
                                                       right: 10,
                                                       child: new Text(categoryList[index]["name"],
-                                                          style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontWeight: FontWeight.w600, fontSize: 22))),
+                                                          style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.white, letterSpacing: .5, fontWeight: FontWeight.w600, fontSize: 22))),
                                                     )
                                                   ],
                                                 ),
@@ -555,7 +560,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ))));
                             }),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       Container(
@@ -563,10 +568,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           "Featured Businesses",
                           textAlign: TextAlign.left,
-                          style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontWeight: FontWeight.w600, fontSize: 24)),
+                          style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, letterSpacing: .5, fontWeight: FontWeight.w600, fontSize: 24)),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
@@ -582,7 +587,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   showModalSheet(context, topBusinessList[index]);
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.only(right: 20),
+                                  padding: const EdgeInsets.only(right: 20),
                                   child: Container(
                                       width: height * 0.25,
                                       child: Column(
@@ -604,21 +609,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           Text(topBusinessList[index]["business_name"],
                                               maxLines: 1,
-                                              style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontWeight: FontWeight.w600, fontSize: 18)),
+                                              style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, letterSpacing: .5, fontWeight: FontWeight.w600, fontSize: 18)),
                                               textAlign: TextAlign.center),
                                           Text(topBusinessList[index]["cat_name"],
-                                              style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black, letterSpacing: .5, fontWeight: FontWeight.w300, fontSize: 16)))
+                                              style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, letterSpacing: .5, fontWeight: FontWeight.w300, fontSize: 16)))
                                         ],
                                       )),
                                 ),
                               );
                             }),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Padding(
-                          padding: EdgeInsets.only(left: 20, bottom: 20, right: 20),
+                          padding: const EdgeInsets.only(left: 20, bottom: 20, right: 20),
                           child: InkWell(
                             onTap: () {
                               _isLoggedIn
