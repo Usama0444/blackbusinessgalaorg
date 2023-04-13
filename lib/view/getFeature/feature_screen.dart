@@ -32,15 +32,6 @@ class _FeatureScreenState extends State<FeatureScreen> {
   final businessEmailTextController = TextEditingController();
   final businessAddressTextController = TextEditingController();
 
-  String _contactName = '';
-  String _companyTitle = '';
-  String _contactPhone = '';
-  String _contactEmail = '';
-  String _businessName = '';
-  String _businessPhone = '';
-  String _businessEmail = '';
-  String _businessAddress = '';
-
   File? _image;
   final picker = ImagePicker();
 
@@ -90,40 +81,41 @@ class _FeatureScreenState extends State<FeatureScreen> {
         });
       });
     } else {
-      // print(reponse.body);
+      print(res.statusCode);
+      showMessage(res.reasonPhrase.toString(), Colors.red, Icons.error);
     }
   }
 
   checkValidation() {
-    if (_contactName == null || _contactName.isEmpty || _contactName == "") {
+    if (contactNameTextController.text == null || contactNameTextController.text.isEmpty || contactNameTextController.text == "") {
       showMessage("Please enter contact person name", Colors.red, Icons.close);
       return false;
     } else {
-      if (_companyTitle == null || _companyTitle.isEmpty || _companyTitle == "") {
+      if (companyTitleTextController.text == null || companyTitleTextController.text.isEmpty || companyTitleTextController.text == "") {
         showMessage("Please enter title with the company", Colors.red, Icons.close);
         return false;
       } else {
-        if (_contactPhone == null || _contactPhone.isEmpty || _contactPhone == "") {
+        if (contactPhoneTextController.text == null || contactPhoneTextController.text.isEmpty || contactPhoneTextController.text == "") {
           showMessage("Please enter contact phone", Colors.red, Icons.close);
           return false;
         } else {
-          if (_contactEmail == null || _contactEmail.isEmpty || _contactEmail == "") {
+          if (contactEmailTextController.text == null || contactEmailTextController.text.isEmpty || contactEmailTextController.text == "") {
             showMessage("Please enter contact email", Colors.red, Icons.close);
             return false;
           } else {
-            if (_businessName == null || _businessName.isEmpty || _businessName == "") {
+            if (businessNameTextController.text == null || businessNameTextController.text.isEmpty || businessNameTextController.text == "") {
               showMessage("Please enter business name", Colors.red, Icons.close);
               return false;
             } else {
-              if (_businessPhone == null || _businessPhone.isEmpty || _businessPhone == "") {
+              if (businessPhoneTextController.text == null || businessPhoneTextController.text.isEmpty || businessPhoneTextController.text == "") {
                 showMessage("Please enter business phone", Colors.red, Icons.close);
                 return false;
               } else {
-                if (_businessEmail == null || _businessEmail.isEmpty || _businessEmail == "") {
+                if (businessEmailTextController.text == null || businessEmailTextController.text.isEmpty || businessEmailTextController.text == "") {
                   showMessage("Please enter business email", Colors.red, Icons.close);
                   return false;
                 } else {
-                  if (_businessAddress == null || _businessAddress.isEmpty || _businessAddress == "") {
+                  if (businessAddressTextController.text == null || businessAddressTextController.text.isEmpty || businessAddressTextController.text == "") {
                     showMessage("Please enter business address", Colors.red, Icons.close);
                     return false;
                   } else {
@@ -198,7 +190,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           placeholder: "Contant Person Name",
                           leftIcon: Icons.person,
                           obscureText: false,
-                          onChanged: (text) => _contactName = text,
+                          onChanged: (text) => contactNameTextController.text = text,
                         ),
                         SizedBox(
                           height: 15,
@@ -209,7 +201,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           placeholder: "Title with the company",
                           leftIcon: Icons.business,
                           obscureText: false,
-                          onChanged: (text) => _companyTitle = text,
+                          onChanged: (text) => companyTitleTextController.text = text,
                         ),
                         SizedBox(
                           height: 15,
@@ -220,7 +212,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           placeholder: "Contact Phone",
                           leftIcon: Icons.phone,
                           obscureText: false,
-                          onChanged: (text) => _contactPhone = text,
+                          onChanged: (text) => contactPhoneTextController.text = text,
                         ),
                         SizedBox(
                           height: 15,
@@ -231,7 +223,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           placeholder: "Contact email",
                           leftIcon: Entypo.mail,
                           obscureText: false,
-                          onChanged: (text) => _contactEmail = text,
+                          onChanged: (text) => contactEmailTextController.text = text,
                         ),
                         SizedBox(
                           height: 15,
@@ -242,7 +234,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           placeholder: "Business name",
                           leftIcon: Icons.business_center,
                           obscureText: false,
-                          onChanged: (text) => _businessName = text,
+                          onChanged: (text) => businessNameTextController.text = text,
                         ),
                         SizedBox(
                           height: 15,
@@ -253,7 +245,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           placeholder: "Business phone",
                           leftIcon: MaterialIcons.phone,
                           obscureText: false,
-                          onChanged: (text) => _businessPhone = text,
+                          onChanged: (text) => businessPhoneTextController.text = text,
                         ),
                         SizedBox(
                           height: 15,
@@ -264,7 +256,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           placeholder: "Business email",
                           leftIcon: Icons.email,
                           obscureText: false,
-                          onChanged: (text) => _businessEmail = text,
+                          onChanged: (text) => businessEmailTextController.text = text,
                         ),
                         SizedBox(
                           height: 15,
@@ -275,7 +267,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           placeholder: "Business address",
                           leftIcon: Entypo.address,
                           obscureText: false,
-                          onChanged: (text) => _businessAddress = text,
+                          onChanged: (text) => businessAddressTextController.text = text,
                         ),
                         SizedBox(
                           height: 15,
@@ -302,14 +294,28 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           ),
                         ),
                         SizedBox(height: 20),
-                        MyRaisedButton(
-                          title: "Submit",
-                          isBackground: true,
-                          onPressed: () {
-                            if (checkValidation()) {
-                              businessInquiry(_contactName, _companyTitle, _contactPhone, _contactEmail, _businessName, _businessPhone, _businessEmail, _businessAddress, _image!);
-                            }
-                          },
+                        SizedBox(
+                          width: width * 0.85,
+                          height: height <= 667.0 ? height * 0.07 : height * 0.06,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                side: const BorderSide(color: Colors.black, width: 0),
+                              ),
+                              backgroundColor: Colors.black,
+                            ),
+                            onPressed: () {
+                              if (checkValidation()) {
+                                businessInquiry(contactNameTextController.text, companyTitleTextController.text, contactPhoneTextController.text, contactEmailTextController.text,
+                                    businessNameTextController.text, businessPhoneTextController.text, businessEmailTextController.text, businessAddressTextController.text, _image!);
+                              }
+                            },
+                            child: Text(
+                              "Submit".toUpperCase(),
+                              style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: height <= 667.0 ? 16 : 18, fontWeight: FontWeight.bold)),
+                            ),
+                          ),
                         ),
                         SizedBox(height: 30),
                       ],

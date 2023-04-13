@@ -87,6 +87,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
     var res = await request.send();
     print(res.statusCode);
     if (res.statusCode == 200) {
+      print('business add');
       res.stream.transform(utf8.decoder).listen((value) {
         showMessage(json.decode(value)["message"], Colors.red, Icons.error);
         clearText();
@@ -390,7 +391,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Container(
+                        SizedBox(
                           width: width * 0.85,
                           height: height <= 667.0 ? height * 0.07 : height * 0.06,
                           child: ElevatedButton(

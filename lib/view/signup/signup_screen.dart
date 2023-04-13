@@ -104,6 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return SafeArea(
       child: Scaffold(
           key: scaffoldKey,
+          backgroundColor: Colors.white,
           body: _isLoading
               ? const Center(
                   child: CircularProgressIndicator(

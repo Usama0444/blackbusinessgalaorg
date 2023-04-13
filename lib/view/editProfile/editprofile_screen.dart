@@ -242,18 +242,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   onChanged: (text) => _password = text,
                                 ),
                                 SizedBox(height: 45),
-                                MyRaisedButton(
-                                  title: "Submit",
-                                  isBackground: true,
-                                  onPressed: () {
-                                    if (checkValidation()) {
-                                      if (_password == null || _password == "") {
-                                        _asyncFileUpload(_image!, _name, _email, _username, "");
-                                      } else {
-                                        _asyncFileUpload(_image!, _name, _email, _username, _password);
+                                SizedBox(
+                                  width: width * 0.85,
+                                  height: height <= 667.0 ? height * 0.07 : height * 0.06,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25.0),
+                                        side: const BorderSide(color: Colors.black, width: 0),
+                                      ),
+                                      backgroundColor: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      if (checkValidation()) {
+                                        if (_password == null || _password == "") {
+                                          _asyncFileUpload(_image!, _name, _email, _username, "");
+                                        } else {
+                                          _asyncFileUpload(_image!, _name, _email, _username, _password);
+                                        }
                                       }
-                                    }
-                                  },
+                                    },
+                                    child: Text(
+                                      "Submit".toUpperCase(),
+                                      style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: height <= 667.0 ? 16 : 18, fontWeight: FontWeight.bold)),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
