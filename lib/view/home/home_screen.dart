@@ -459,7 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ));
               },
               cursorColor: Colors.black,
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color(0xffDCDCDC),
                 contentPadding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
@@ -467,16 +467,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.search,
                   size: height <= 667.0 ? 23 : 25,
                 ),
-                border: new OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(25.0),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(25.0),
                   ),
-                  borderSide: const BorderSide(
+                  borderSide: BorderSide(
                     width: 0,
                     style: BorderStyle.none,
                   ),
                 ),
-                hintStyle: new TextStyle(color: Colors.grey[800]),
+                hintStyle: TextStyle(color: Colors.grey[800]),
                 hintText: "Search",
                 isDense: true,
               ),
