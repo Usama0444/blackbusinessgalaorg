@@ -45,8 +45,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
       if (permission == LocationPermission.deniedForever) {
         return Future.error('Location Not Available');
       }
-    } else {
-      throw Exception('Error');
     }
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     print(position.latitude.toString());
